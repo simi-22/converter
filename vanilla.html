@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <!-- 
+        버튼을 몇번 클릭했는지 세는 어플리케이션
+     -->
+     <span>Total Clicks : 0</span>
+     <button id="btn">Click Me!</button>
+
+
+     <script>
+        let counter =0;
+       const button = document.querySelector('#btn');
+       const span = document.querySelector('span');
+       function handleClick(){
+        counter = counter + 1;
+        span.innerText = `Total Clicks : ${counter}`;
+       }
+       button.addEventListener('click',handleClick);
+
+
+
+     </script>
+</body>
+</html>

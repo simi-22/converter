@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            max-width: 1200px;
+            height: 100vh;
+            margin: 0 auto;
+            padding: 50px 0;
+            text-align: center;
+        }
+        select{
+            display: block;
+            margin: 0 auto;
+            padding: 5px 15px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        label{
+            display: inline-block;
+            margin-right: 5px;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        input{
+            padding: 5px 10px;
+        }
+        h3{
+            margin: 5px 0;
+        }
+        h4{
+            margin: 15px 0 15px 0;
+        }
+        button{
+            margin-top: 20px;
+            padding: 5px 10px;
+            background: none;
+        }
+        button:last-of-type{
+            margin-left: 10px;
+        }
+    </style>
+<body>
+    <div id="root"></div>
+</body>
+<!-- 리액트 버전 -->
+<!-- React Import-->
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- //Babel은 JSX를 브라우저가 이해하는 문서형식으로 변환해줌 그형식이 아래 형식 -->
+<script type="text/babel">
+    // React.Js 이해를 위한 어려운 방법 // 실제로는 쓰지않음
+    const root = document.getElementById('root');
+    //JSX
+    // const Title = () => (
+    //     <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
+    //         Hello I'm a title    
+    //     </h3>
+    // );
+    // const Button = () => (
+    //     <button 
+    //     style = {{backgroundColor : "tomato"}}
+    //     onClick ={() => console.log('im clicked')}>
+    //         Click me
+    //     </button>
+    // );
+
+
+        // 브라우저 에러 Uncaught SyntaxError: Unexpected token '<' (at index.html:53:9)
+        //브라우저는 JSX를 이해를 못함
+       
+
+
+    /* 
+    const h3 = React.createElement(
+        'h3', {
+            id : 'title',
+            onMouseEnter: () => console.log('mouse Enter'), 
+        }, 
+        'Hello I am a title'
+        ); // 리액트 element 생성 
+    */
+    /*
+    const btn = React.createElement('button', {
+        onClick : () => console.log('im clicked'),
+        style : {background : 'tomato'}
+    }, 'Click Me');
+    */
+
+    // let counter = 0;
+    // function countUp() {
+    //     counter = counter +1;
+    //     render();
+    // }
+    // function render() {
+    //     ReactDOM.render(<App />, root)
+    // }
+    //컴포넌트는 파스칼 표기법을 사용해야됨
+
+    // const App = React.createElement('div',null,[Title, btn]);
+    // render();
+
+
+
+    //MinutesToHours 옵션 컴포넌트
+    function MinutesToHours(){
+        const [amount, setAmount] = React.useState(0)
+        const [Inverted, setInverted] = React.useState(false);
+        const onChange = (event) => {
+            setAmount(event.target.value)
+        }
+        const reset = () => setAmount(0)
+        const onFlip = () => {
+            reset();
+            setInverted((current) => !current);
+        };
+        return(
+        <div>
+            <h3>Minutes 2 Hour</h3>
+            <div>
+                <label htmlFor="minutes">Minutes</label>
+                <input 
+                    value={Inverted ? amount * 60 : amount} 
+                    id="minutes" 
+                    placeholder="Minutes" 
+                    type="number" 
+                    onChange={onChange} 
+                    // disabled = {Inverted === true} 
+                    disabled = {Inverted} 
+                />
+                <h4>You want to convert {amount} </h4>
+            </div>
+            <div>
+                <label htmlFor="hours">Hours</label>
+                <input 
+                    value={Inverted ? amount : Math.round(amount / 60)} 
+                    id="hours" 
+                    placeholder="Hours" 
+                    type="number" 
+                    // disabled = {Inverted === false} 
+                    disabled = {!Inverted} 
+                    onChange={onChange}
+                />
+            </div>
+            <button onClick = {reset}>Reset</button>
+            <button onClick = {onFlip}>{Inverted ? "Turn back" : "Invert"}</button>
+        </div>
+        );
+    }
+
+
+    //KmToMile 옵션 컴포넌트
+    function KmToMile(){
+        const [Distance, setDistance] = React.useState(0)
+        const [Inverted, setInverted] = React.useState(false);
+        const onChange = (event) => {
+            setDistance(event.target.value)
+        }
+        const reset = () => setDistance(0)
+        const onFlip = () => {
+            reset();
+            setInverted((current) => !current);
+        };
+        return(
+        <div>
+            <h3> KM 2 Mile </h3>
+            <div>
+                <label htmlFor="km">KM</label>
+                <input 
+                    value={Inverted ? (Distance / 0.621371) : Distance} 
+                    id="km" 
+                    placeholder="KM" 
+                    type="number"
+                    onChange={onChange} 
+                    // disabled = {Inverted === true} 
+                    disabled = {Inverted} 
+                />
+                <h4>You want to convert {Distance} </h4>
+            </div>
+            <div>
+                <label htmlFor="mile">Mile</label>
+                <input 
+                    value={Inverted ? Distance : (Distance * 0.621371)} 
+                    id="mile" 
+                    placeholder="Mile" 
+                    type="number" 
+                    // disabled = {Inverted === false} 
+                    disabled = {!Inverted} 
+                    onChange={onChange}
+                />
+            </div>
+            <button onClick = {reset}>Reset</button>
+            <button onClick = {onFlip}>{Inverted ? "Turn back" : "Invert"}</button>
+        </div>   
+        )
+    }
+
+    //최종적으로 html 그려주는 함수
+    function App(){
+        const [index, setIndex] = React.useState("xx")
+        const onSelect = (event) => {
+            setIndex(event.target.value)
+        }
+        return(
+        <div className="container">
+            <h1>단위변환기</h1>
+            <select onChange={onSelect}>
+                <option value="xx">Select Your Units</option>
+                <option value="0">Minutes & Hours</option>
+                <option value="1">Km &  Mile</option>
+            </select>
+            {index === "xx" ? "Please Select Your Units" : null}
+            {index === "0" ? <MinutesToHours /> : null}
+            {index === "1" ? <KmToMile /> : null}
+        </div>
+        );
+    }
+
+
+
+
+    ReactDOM.render(<App />, root)
+
+
+
+
+
+
+</script>
+
+</html>
